@@ -1,12 +1,10 @@
 
 import fileinput
 from canvas import *
-from chartCanvas import *
 from constants import *  
 from chartMatrixCanvas import * 
 
 #third party import 
-from pyparsing import *
 
 gProcesses=[]
 gMsgSequence=[]
