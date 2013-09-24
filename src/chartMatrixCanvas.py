@@ -7,10 +7,11 @@ class ChartMatrixCanvas(Canvas):
     ROWSPAN=2    
     BORDER=1
     
-    def __init__(self,process,msgMatrix,alias):
+    def __init__(self,process,msgMatrix,alias, aliasList):
         self.process=process
         self.msgMatrix=msgMatrix
         self.alias=alias
+        self.aliasList = aliasList 
         self.states=[]        
         self.messages=[]
         self.processInfo={}
@@ -112,10 +113,11 @@ class ChartMatrixCanvas(Canvas):
                     raise 'msgType not supported'
                 
     def drawHeader(self):        
-        
+                
+        col,row,currow = self.processInfo[self.process[0]]
         row = self.MARGIN
-        col = self.SPAN
-        for longName, shortName in self.alias.items():
+        for longName in self.aliasList:
+            shortName = self.alias[longName]
             self.text(col,row,"%s = %s" % (shortName,longName))
             row += 1
         for p in self.process:

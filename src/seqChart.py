@@ -12,6 +12,7 @@ gProcesses=[]
 gMsgSequence=[]
 gCmdMatrix = []
 gMsgMatrix = []
+gAliasList=[]
 gAlias={}
 
 def snd_matrix(column, process,toProcess,message):
@@ -57,6 +58,8 @@ def proc(*processes):
 def alias(shortName, longName):
     global gAlias
     gAlias[longName]=shortName
+    if longName not in gAliasList:
+        gAliasList.append(longName)
     pass
 
 def getAbbr(longName, dictionary=gAlias):
@@ -114,13 +117,14 @@ def main():
     global gMsgSequence
     global gCmdMatrix
     global gMsgMatrix
+    global gAliasList
     for line in fileinput.input():
         parseLine(line)
     #print(gCmdMatrix)    
     for row in gCmdMatrix  :        
             parseMatrixCmd(*row)
     #print(gMsgMatrix)        
-    canvas=ChartMatrixCanvas(gProcesses, gMsgMatrix,gAlias)
+    canvas=ChartMatrixCanvas(gProcesses, gMsgMatrix,gAlias,gAliasList)
     #for line in fileinput.input():
     #    parseCmd(line)
     #canvas=ChartCanvas(gProcesses,gMsgSequence)
