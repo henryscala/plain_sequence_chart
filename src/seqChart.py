@@ -12,11 +12,14 @@ gProcesses=[]
 gMsgSequence=[]
 gCmdMatrix = []
 gMsgMatrix = []
+gAlias={}
 
 def snd_matrix(column, process,toProcess,message):
     global gProcesses
     global gMsgMatrix
-    
+    process=getAbbr(process)
+    toProcess=getAbbr(toProcess)
+    message=getAbbr(message)
     if process not in gProcesses:
         gProcesses.append(process)
     if toProcess not in gProcesses:
@@ -31,7 +34,8 @@ def rcv_matrix(column, process,fromProcess,message):
     
 def state_matrix(column, process,astate):
     global gProcesses
-        
+    process=getAbbr(process)
+    astate=getAbbr(astate)    
     if process not in gProcesses:
         gProcesses.append(process)
 
@@ -41,38 +45,24 @@ def state_matrix(column, process,astate):
         gMsgMatrix[len(gMsgMatrix)-1].append((STATE,(process,astate)))
 
 
-def snd(process,toProcess,message):
-    global gProcesses
-    global gMsgSequence
- 
 
-    
-    if process not in gProcesses:
-        gProcesses.append(process)
-    if toProcess not in gProcesses:
-        gProcesses.append(toProcess)
-    gMsgSequence.append((MESSAGE,(process,toProcess,message)))
-    
-def rcv(process,fromProcess,message):
-    snd(fromProcess,process,message)
-    
-def state(process,astate):
-    global gProcesses
-    
-    
-    if process not in gProcesses:
-        gProcesses.append(process)
-    gMsgSequence.append((STATE,(process,astate)))
 
 def proc(*processes):
     global gProcesses
     for process in processes:
-        
+        process=getAbbr(process)
         if process not in gProcesses:
             gProcesses.append(process)
 
+def alias(shortName, longName):
+    global gAlias
+    gAlias[longName]=shortName
+    pass
 
- 
+def getAbbr(longName, dictionary=gAlias):
+    if longName in dictionary:
+        return dictionary[longName]
+    return longName 
 
 def parseLine(line):
     line=line.strip()
@@ -85,28 +75,7 @@ def parseLine(line):
 
     pass
 
-def parseCmd(cmd):
-    cmd=cmd.strip()
-    if len(cmd)==0: 
-        return True
-    if cmd.startswith(COMMENT):
-        return True
-    cmds=cmd.split()
-    
-    theFunction=cmds[0].lower()
-    theArgs=cmds[1:]
-    if theFunction=='snd':
-        snd( *theArgs)
-    elif theFunction=='rcv':
-        rcv( *theArgs)
-    elif theFunction=='state':
-        state( *theArgs)
-    elif theFunction=='proc':  
-        proc(*theArgs)  
-    else:        
-        raise 'cmd wrong'
-        return False
-    return True
+
 
 
 def parseMatrixCmd(*commands):
@@ -129,6 +98,8 @@ def parseMatrixCmd(*commands):
             state_matrix(column, *theArgs)
         elif theFunction=='proc':  
             proc(*theArgs)  
+        elif theFunction=='alias':     
+            alias(*theArgs)    
         else:        
             raise 'cmd wrong'
             return False
@@ -149,7 +120,7 @@ def main():
     for row in gCmdMatrix  :        
             parseMatrixCmd(*row)
     #print(gMsgMatrix)        
-    canvas=ChartMatrixCanvas(gProcesses, gMsgMatrix)
+    canvas=ChartMatrixCanvas(gProcesses, gMsgMatrix,gAlias)
     #for line in fileinput.input():
     #    parseCmd(line)
     #canvas=ChartCanvas(gProcesses,gMsgSequence)

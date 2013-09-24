@@ -4,11 +4,12 @@ from constants import *
 class ChartMatrixCanvas(Canvas):
     SPAN=4
     MARGIN=1
-    ROWSPAN=3    
+    ROWSPAN=2    
     
-    def __init__(self,process,msgMatrix):
+    def __init__(self,process,msgMatrix,alias):
         self.process=process
         self.msgMatrix=msgMatrix
+        self.alias=alias
         self.states=[]        
         self.messages=[]
         self.processInfo={}
@@ -38,14 +39,14 @@ class ChartMatrixCanvas(Canvas):
         for i in range(len(self.process)):
             p=self.process[i]
             col=self.MARGIN+self.interval*(i+1)
-            row=self.MARGIN 
+            row=self.MARGIN + self.MARGIN + len(self.alias) 
             currow=row
             #print(" init currow=%d process=%s" % (currow, p) )
             self.processInfo[p]=(col,row,currow)
             #self.processInfo[p]=(col,row)
         
         cols=col+self.interval+self.MARGIN
-        rows=(len(self.msgMatrix)+1)*self.ROWSPAN+2*self.MARGIN
+        rows=(len(self.msgMatrix)+2)*self.ROWSPAN+4*self.MARGIN+len(self.alias)
         return (cols,rows)
     
     def draw(self):
@@ -107,13 +108,15 @@ class ChartMatrixCanvas(Canvas):
         
         row = self.MARGIN
         col = self.SPAN
-        
+        for longName, shortName in self.alias.items():
+            self.text(col,row,"%s = %s" % (shortName,longName))
+            row += 1
         for p in self.process:
             col,row,currow=self.processInfo[p]
             #col,row=self.processInfo[p]
             width,height=self.rectText(col,currow,p,center=True)
             bottom=row+height    
-            currow+=self.ROWSPAN        
+            currow+=self.ROWSPAN + 2*self.MARGIN       
             #print("header currow=%d process=%s" % (currow, p) )
             self.processInfo[p]=(col,row,currow)
             #self.processInfo[p]=(col,row)            

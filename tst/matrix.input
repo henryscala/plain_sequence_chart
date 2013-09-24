@@ -1,12 +1,18 @@
 
 
 
+
+#specify alias first 
+ALIAS IVT INVITE
+ALIAS AK ACK
+ALIAS ALICE A 
+
 #specify the sequence of processes
 PROC A B C D
 
 #messages
-SND A B INVITE   | SND C D INVITE 
-RCV A B 200      | RCV D C 200   
+SND A B INVITE   | SND B C INVITE | SND C D INVITE 
+RCV A B 200      | RCV B C 200    | RCV C D 200   
  
 SND A D ACK
 SND A D BYE
