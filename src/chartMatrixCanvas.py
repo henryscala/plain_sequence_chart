@@ -132,3 +132,4 @@ class ChartMatrixCanvas(Canvas):
             self.vline(col,bottom,self.row-self.MARGIN-bottom,arrow=True)
         #self.currow+=self.ROWSPAN    
  
+ 

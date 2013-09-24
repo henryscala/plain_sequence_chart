@@ -177,3 +177,4 @@ class Canvas:
 
          while self.isRowBlank(0):
             self.shiftTop(1)
+
