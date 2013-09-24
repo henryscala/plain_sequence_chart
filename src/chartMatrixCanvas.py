@@ -5,6 +5,7 @@ class ChartMatrixCanvas(Canvas):
     SPAN=4
     MARGIN=1
     ROWSPAN=2    
+    BORDER=1
     
     def __init__(self,process,msgMatrix,alias):
         self.process=process
@@ -46,7 +47,7 @@ class ChartMatrixCanvas(Canvas):
             #self.processInfo[p]=(col,row)
         
         cols=col+self.interval+self.MARGIN
-        rows=(len(self.msgMatrix)+2)*self.ROWSPAN+4*self.MARGIN+len(self.alias)
+        rows=(len(self.msgMatrix)+2)*self.ROWSPAN+4*self.MARGIN+len(self.alias)+2*self.BORDER
         return (cols,rows)
     
     def draw(self):
@@ -83,8 +84,14 @@ class ChartMatrixCanvas(Canvas):
         col,row,currow=self.processInfo[p]
         width,height=self.waveRectText(col,currow,s,center=True)
         if column == 0:
-            currow+=self.ROWSPAN
+            currow+=self.ROWSPAN + self.BORDER * 2 
             self.processInfo[p]=(col,row,currow)
+            for p in self.process:
+                col,row,currow1=self.processInfo[p]
+                if currow1<currow:
+                    currow1=currow
+                self.processInfo[p]=(col,row,currow1)
+        
 
     
     def drawMatrix(self):
