@@ -28,8 +28,10 @@ class Canvas:
     def output(self):
         for i in range(self.row):  
             lineStart=self.column*i  
-            line=self.canvas[lineStart:lineStart+self.column].tostring().decode('utf-8')           
-            print (line)
+            line=self.canvas[lineStart:lineStart+self.column].tostring().decode('utf-8')    
+            line = line.rstrip()   
+            if len(line) > 0:   
+                print (line)
         
     def point(self,col,row,char):
         self.__draw(col,row,char)
@@ -144,3 +146,34 @@ class Canvas:
                 height=rows+2
                 self.waveRect(left,top,width,height)   
         return (width,height)
+
+    def ordAt(self,col,row):
+        return self.canvas[self.column*row+col]
+
+    def isRowBlank(self,row):
+        for c in range(self.column):
+            if self.ordAt(c,row)!=ord(self.BLANK):
+                return False 
+        return True 
+
+    def isColumnBlank(self,column):
+        for r in range(self.row):
+            if self.ordAt(column,r)!=ord(self.BLANK):
+                return False
+        return True         
+
+    def shiftLeft(self,fromColumn, numOfColumn=1):
+        for r in range(self.row):
+            for c in range(fromColumn,self.column):
+                self.point(c - numOfColumn, r, chr(self.ordAt(c,r)))
+    def shiftTop(self,fromRow, numOfRow=1):
+        for c in range(self.column):
+            for r in range(fromRow,self.row):
+                self.point(c, r-numOfRow, chr(self.ordAt(c,r)))
+
+    def trimLeftTop(self):
+         while self.isColumnBlank(0):
+            self.shiftLeft(1)
+
+         while self.isRowBlank(0):
+            self.shiftTop(1)

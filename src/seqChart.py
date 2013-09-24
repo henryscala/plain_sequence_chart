@@ -125,6 +125,7 @@ def main():
     #    parseCmd(line)
     #canvas=ChartCanvas(gProcesses,gMsgSequence)
     canvas.draw()
+    canvas.trimLeftTop()
     canvas.output()
     
                      
