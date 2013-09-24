@@ -1,0 +1,13 @@
+
+
+
+#specify the sequence of processes
+PROC A B C D
+
+#messages
+SND A B INVITE   | SND C D INVITE 
+RCV A B 200      | RCV D C 200   
+ 
+SND A D ACK
+SND A D BYE
+RCV A D 200 
