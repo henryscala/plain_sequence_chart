@@ -2,23 +2,31 @@ from canvas import *
 from constants import *  
 
 class ChartCanvas(Canvas):
-    BORDER=1
+    SPAN=4
     MARGIN=1
-    PADDING=1   
+    ROWSPAN=3    
     
-    def __init__(self,commandList):
-        self.commandList=commandList
-        self.labels={}
-        self.notes=[]        
+    def __init__(self,process,sequence, alias):
+        self.process=process
+        self.sequence=sequence
+        self.alias=alias
+        self.states=[]        
         self.messages=[]
-        self.instances=[]                
-        processCommandList(self.commandList)    
+        self.processInfo={}
+        
+        for type,contents in self.sequence:
+            if type==MESSAGE:
+                if contents[2] not in self.messages:
+                    self.messages.append(contents[2])
+            elif type==STATE:
+                if contents[1] not in self.states:
+                    self.states.append(contents[1])
+            else:
+                raise 'type not supported'
+            
         cols,rows=self.initCanvas()
         Canvas.__init__(self,cols,rows)
     
-    def processCommandList(cmdList):
-        pass    
-
     def initCanvas(self):
         processCount=len(self.process)
         maxTextLen=max([len(l) for l in (self.states+self.messages)])

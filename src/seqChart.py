@@ -3,25 +3,18 @@ import fileinput
 from canvas import *
 from chartCanvas import *
 from constants import *  
-from sexp import sexp 
+
 #third party import 
 from pyparsing import *
 
-
-gInstances=[]
-gLabels={}
+gProcesses=[]
 gMsgSequence=[]
 gAlias={}
 
-def instance( inst, label=None ):
-    global gInstances
-    if inst not in gInstances:
-        gInstances.append(process)
-    if label:    
-        gLabels[inst] = label 
 
 
-def send(process,toProcess,message):
+
+def snd(process,toProcess,message):
     global gProcesses
     global gMsgSequence
     process=getAbbr(process)
@@ -33,10 +26,10 @@ def send(process,toProcess,message):
         gProcesses.append(toProcess)
     gMsgSequence.append((MESSAGE,(process,toProcess,message)))
     
-def receive(process,fromProcess,message):
-    send(fromProcess,process,message)
+def rcv(process,fromProcess,message):
+    snd(fromProcess,process,message)
     
-def note(process,astate):
+def state(process,astate):
     global gProcesses
     process=getAbbr(process)
     astate=getAbbr(astate)
@@ -44,7 +37,12 @@ def note(process,astate):
         gProcesses.append(process)
     gMsgSequence.append((STATE,(process,astate)))
 
-
+def proc(*processes):
+    global gProcesses
+    for process in processes:
+        process=getAbbr(process)
+        if process not in gProcesses:
+            gProcesses.append(process)
 
 def alias(shortName, longName):
     global gAlias
@@ -91,14 +89,13 @@ def getAbbr(longName, dictionary=gAlias):
         return dictionary[longName]
     return longName
 
-def processCommands( cmdList ):
-    pass
 
 def main():
-    commandList = sexp.parseString(fileinput.input()).asList()
-    
-
-    canvas=ChartCanvas(commandList)
+    global gProcesses
+    global gMsgSequence
+    for line in fileinput.input():
+        parseCmd(line)
+    canvas=ChartCanvas(gProcesses,gMsgSequence,gAlias)
     canvas.draw()
     canvas.output()
     
