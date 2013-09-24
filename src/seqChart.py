@@ -9,7 +9,7 @@ from pyparsing import *
 
 gProcesses=[]
 gMsgSequence=[]
-gAlias={}
+
 
 
 
@@ -17,9 +17,9 @@ gAlias={}
 def snd(process,toProcess,message):
     global gProcesses
     global gMsgSequence
-    process=getAbbr(process)
-    toProcess=getAbbr(toProcess)
-    message=getAbbr(message)
+ 
+
+    
     if process not in gProcesses:
         gProcesses.append(process)
     if toProcess not in gProcesses:
@@ -31,8 +31,8 @@ def rcv(process,fromProcess,message):
     
 def state(process,astate):
     global gProcesses
-    process=getAbbr(process)
-    astate=getAbbr(astate)
+    
+    
     if process not in gProcesses:
         gProcesses.append(process)
     gMsgSequence.append((STATE,(process,astate)))
@@ -40,15 +40,11 @@ def state(process,astate):
 def proc(*processes):
     global gProcesses
     for process in processes:
-        process=getAbbr(process)
+        
         if process not in gProcesses:
             gProcesses.append(process)
 
-def alias(shortName, longName):
-    global gAlias
-    gAlias[longName]=shortName
-    pass
-    
+
 def lst():
     print ('processes:')
     print (gProcesses)
@@ -84,10 +80,7 @@ def parseCmd(cmd):
         return False
     return True
 
-def getAbbr(longName, dictionary=gAlias):
-    if longName in dictionary:
-        return dictionary[longName]
-    return longName
+
 
 
 def main():
@@ -95,7 +88,7 @@ def main():
     global gMsgSequence
     for line in fileinput.input():
         parseCmd(line)
-    canvas=ChartCanvas(gProcesses,gMsgSequence,gAlias)
+    canvas=ChartCanvas(gProcesses,gMsgSequence)
     canvas.draw()
     canvas.output()
     

@@ -1,9 +1,5 @@
 
-#make name short 
-ALIAS IVT INVITE
-ALIAS AK  ACK 
-ALIAS MS  MID_SESSION
-ALIAS C   CATHERINE
+
 
 #specify the sequence of processes
 PROC BOB ALICE CATHERINE

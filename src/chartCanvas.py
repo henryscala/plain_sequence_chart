@@ -6,10 +6,9 @@ class ChartCanvas(Canvas):
     MARGIN=1
     ROWSPAN=3    
     
-    def __init__(self,process,sequence, alias):
+    def __init__(self,process,sequence):
         self.process=process
         self.sequence=sequence
-        self.alias=alias
         self.states=[]        
         self.messages=[]
         self.processInfo={}
@@ -38,13 +37,13 @@ class ChartCanvas(Canvas):
         for i in range(len(self.process)):
             p=self.process[i]
             col=self.MARGIN+self.interval*(i+1)
-            row=self.MARGIN + self.MARGIN + len(self.alias) 
+            row=self.MARGIN 
             currow=row
             self.processInfo[p]=(col,row,currow)
             #self.processInfo[p]=(col,row)
         
         cols=col+self.interval+self.MARGIN
-        rows=(len(self.sequence)+1)*self.ROWSPAN+2*self.MARGIN+len(self.alias)
+        rows=(len(self.sequence)+1)*self.ROWSPAN+2*self.MARGIN
         return (cols,rows)
     
     def draw(self):
@@ -98,10 +97,7 @@ class ChartCanvas(Canvas):
         
         row = self.MARGIN
         col = self.SPAN
-        for longName, shortName in self.alias.items():
-            self.text(col,row,"%s = %s" % (shortName,longName))
-            row += 1
-            pass
+        
         for p in self.process:
             col,row,currow=self.processInfo[p]
             #col,row=self.processInfo[p]
