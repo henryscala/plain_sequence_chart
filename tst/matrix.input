@@ -1,19 +1,20 @@
 
-
-
-
 #specify alias first 
-ALIAS IVT INVITE
-ALIAS AK ACK
-ALIAS ALICE A 
+ALIAS CAT CATHERINE 
 
 #specify the sequence of processes
-PROC A B C D
+PROC  ALICE BOB CATHERINE DANIEL
 
-#messages
-SND A B INVITE   | SND B C INVITE | SND C D INVITE 
-RCV A B 200      | RCV B C 200    | RCV C D 200   
- 
-SND A D ACK
-SND A D BYE
-RCV A D 200 
+#messages between ALICE and BOB | #messages between CATHERINE and DANIEL     
+SND ALICE BOB INVITE            | SND CATHERINE DANIEL INVITE      
+RCV ALICE BOB 200               | RCV CATHERINE DANIEL 200       
+
+#messages between ALICE and DANIEL 
+SND ALICE DANIEL ACK
+
+#set state of ALICE
+STATE ALICE MID_SESSION
+STATE DANIEL MID_SESSION
+
+SND ALICE DANIEL BYE
+RCV ALICE DANIEL 200
