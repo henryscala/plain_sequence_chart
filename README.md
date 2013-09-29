@@ -77,7 +77,7 @@ Get PSC:
 
 or
 
-    [Download ZIP file](https://github.com/henryscala/plain_sequence_chart/archive/master.zip)
+[Download ZIP file](https://github.com/henryscala/plain_sequence_chart/archive/master.zip)
 
 In your favorite shell only if it can run python(3.x), run "seqChart.py". Use input redirection operator "<" to specify input command file. Use output redirection operator ">" to specify to which file to generate the chart, otherwise the chart goes to standard output. 
 
@@ -146,9 +146,9 @@ Output Chart:
 
 ###Parallel Commands  
 
-In this example, there're parallel commands used separated by "|". Compare the differences with the first example(The two INVITE are in the same line). PROC, SND, RCV, ALIAS and STATE commands are concerned. 
+In this example, there're parallel commands used separated by "|". Compare the differences with the first example(The two INVITEs are in the same line). PROC, SND, RCV, ALIAS and STATE commands are concerned. 
 
-    Input Commands:
+Input Commands:
 
     #specify alias first 
     ALIAS CAT CATHERINE 
