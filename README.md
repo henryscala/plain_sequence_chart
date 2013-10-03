@@ -1,6 +1,8 @@
 Plain Sequence Chart
 ====================
 
+Official Site of Plain Sequence Chart is [http://lingcloud.com/plain_sequence_chart/](http://lingcloud.com/plain_sequence_chart/)
+
 PSC, or Plain Sequence Chart, is a tool to generate MSC , or Message Sequence Chart, in plain text format via commands. 
 
 I developed a skeleton of PSC years ago before I even knew github. Recently, I added new features to it and put it opensourced in github. 
@@ -198,18 +200,7 @@ Output Chart:
 Donation
 -------------------
 
-PSC is a opensourced software without any guarantee, and it may destroy the planet. It is up to you to determine whether use it or not. If you trust it, feel free to use it. Of course, donations are welcome. You can donate via the following links. 
-
-[Donate via Alipay](https://me.alipay.com/xuhx)
-
-[Donate via Paypal]
-
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="2P48KZ3ZVJXWJ">
-<input type="image" src="http://lingcloud.com/images/dollar_32.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-</form>
+PSC is a opensourced software without any guarantee, and it may destroy the planet. It is up to you to determine whether use it or not. If you like and trust it, feel free to use it. Of course, donations are welcome. You can donate via the links in the official site. 
 
 
 
